@@ -1,3 +1,6 @@
+
+var utils = require('./utils')
+
 //EvalProp function give a props and values and return the evaluation of the propocition.
 function evalProp(prop, value) {
   const keys = Object.keys(prop);
@@ -19,28 +22,30 @@ function evalProp(prop, value) {
   }
 }
 
-function randomProp(randomNumber, vars, maxHeight, minHeight) {
+function randomProp(rng, vars, maxHeight, minHeight) {
 	const props = ["var", "neg", "and", "or", "iff", "cond"];
-	const randomVarKey = Object.keys(vars)[0];
+	const varRandomIndex = utils.turnToIntBetween(rng(), Object.keys(vars).length, 0);
+	const varChosen = vars[`${Object.keys(vars)[varRandomIndex]}`];
+	const propChosen = props[utils.turnToIntBetween(rng(), props.length, 0)];
 	if (maxHeight < 1) {
-		return {"var": vars[`${randomVarKey}`]};
+		return {"var": varChosen};
 	} else if (maxHeight >= 1) {
-		if (props[randomNumber] == "var") {
+		if (propChosen == "var") {
 			if (minHeight > 1) {
-				return randomProp(rng(randomNumber), vars, maxHeight, minHeight);
+				return randomProp(rng, vars, maxHeight, minHeight);
 			} else {
-				return {"var": vars[`${randomVarKey}`]};
+				return {"var": varChosen};
 			}
-		} else if (props[randomNumber] == 'neg') {
-			return {"neg": randomProp(rng(randomNumber), vars, maxHeight-1, minHeight-1)};
-		} else if (props[randomNumber] == 'and') {
-			return {"and": [randomProp(rng(randomNumber), vars, maxHeight-1, minHeight-1), randomProp(rng(randomNumber-1), vars, maxHeight-1, minHeight-1)]};
-		} else if (props[randomNumber] == 'or') {
-			return {"or": [randomProp(rng(randomNumber), vars, maxHeight-1, minHeight-1), randomProp(rng(randomNumber-1), vars, maxHeight-1, minHeight-1)]};
-		} else if (props[randomNumber] == 'iff') {
-			return {"iff": [randomProp(rng(randomNumber), vars, maxHeight-1, minHeight-1), randomProp(rng(randomNumber-1), vars, maxHeight-1, minHeight-1)]};
-		} else if (props[randomNumber] == 'cond') {
-			return {"cond": [randomProp(rng(randomNumber), vars, maxHeight-1, minHeight-1), randomProp(rng(randomNumber-1), vars, maxHeight-1, minHeight-1)]}
+		} else if (propChosen == 'neg') {
+			return {"neg": randomProp(rng, vars, maxHeight-1, minHeight-1)};
+		} else if (propChosen == 'and') {
+			return {"and": [randomProp(rng, vars, maxHeight-1, minHeight-1), randomProp(rng, vars, maxHeight-1, minHeight-1)]};
+		} else if (propChosen == 'or') {
+			return {"or": [randomProp(rng, vars, maxHeight-1, minHeight-1), randomProp(rng, vars, maxHeight-1, minHeight-1)]};
+		} else if (propChosen == 'iff') {
+			return {"iff": [randomProp(rng, vars, maxHeight-1, minHeight-1), randomProp(rng, vars, maxHeight-1, minHeight-1)]};
+		} else if (propChosen == 'cond') {
+			return {"cond": [randomProp(rng, vars, maxHeight-1, minHeight-1), randomProp(rng, vars, maxHeight-1, minHeight-1)]}
 		} else {
 			console.error("Error no existe ese var");
 			return "Error paso algo";
@@ -48,25 +53,13 @@ function randomProp(randomNumber, vars, maxHeight, minHeight) {
 	}
 }
 
-function rng(semilla) {
-	if (semilla == 1) {
-		return 2;
-	} else if (semilla == 2) {
-		return 0;
-	} else if (semilla == 3) {
-		return 4;
-	} else if (semilla == 4) {
-		return 1;
-	} else if (semilla == 5) {
-		return 3;
-	} else {
-		return 0;
-	}
-}
-
 const ejemplo = {and: [{var: "p"}, {or: [{var: "q"}, {var: "p"}]}]};
 assign2 = {"p": true, "q": false};
-console.log(randomProp(rng(1), assign2, 3, 1));
+console.log("seed inicial:", 2);
+console.log(JSON.stringify(randomProp(utils.rng, assign2, 3, 1)));
+
+
+
 //truthTable return an array of the truth table of a prop with their result.
 function truthTable(props, vars) {
   let allCombinations = createVariableCombinations(vars);

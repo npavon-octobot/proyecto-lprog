@@ -55,8 +55,8 @@ function randomProp(rng, vars, maxHeight, minHeight) {
 
 const ejemplo = {and: [{var: "p"}, {or: [{var: "q"}, {var: "p"}]}]};
 assign2 = {"p": true, "q": false};
-console.log("seed inicial:", 2);
-console.log(JSON.stringify(randomProp(utils.rng, assign2, 3, 1)));
+// console.log("seed inicial:", 2);
+// console.log(JSON.stringify(randomProp(utils.rng, assign2, 3, 1)));
 
 
 
@@ -154,9 +154,42 @@ function reduceToCombinations(arr) {
 	return arr;
 }
 
-assign = {"p": true, "q": false};
-//console.log(`Creating Eval Prop of: ${JSON.stringify(assign)}`);
-//console.log(evalProp({and: [{var: "p"}, {or: [{var: "q"}, {var: "p"}]}]}, assign));
+assign = {"p": 1, "q": 0};
+// console.log(`Creating Eval Prop of: ${JSON.stringify(assign)}`);
+// console.log(evalProp({and: [{var: "p"}, {or: [{var: "q"}, {var: "p"}]}]}, assign));
 
-//console.log("Creating Truth Table")
-//console.log(truthTable({and: [{var: "a"}, {or: [{var: "b"}, {var: "b"}]}]}, ["a", "b"]));
+// console.log("Creating Truth Table")
+// console.log(truthTable({and: [{var: "a"}, {or: [{var: "b"}, {var: "b"}]}]}, ["a", "b"]));
+
+
+function fitness(prop, truthTable){
+	let count = 0;
+	truthTable.forEach(function(caso) {
+		if(evalProp(prop, caso[0]) == caso[1]){
+			count ++;
+		}
+	});
+	return count;
+};
+
+// console.log(fitness({and: [{var: "a"}, {var: "b"}]}, truthTable({and: [{var: "a"}, {or: [{var: "b"}, {var: "b"}]}]}, ["a", "b"])))
+
+
+function randomSearch(rng, truthTable, count, propArgs){
+	let step = 0;
+	let bestProp = null;
+	let bestFitness = Number.MIN_SAFE_INTEGER;
+	while(bestFitness<truthTable.length && step < count){
+		step++;
+		let prop = randomProp(rng, propArgs.vars, propArgs.maxHeight, propArgs.minHeight);
+		let currentFitness = fitness(prop, truthTable);
+		if(currentFitness>bestFitness){
+			bestProp = prop;
+			bestFitness = currentFitness;
+		}
+	}
+	return [bestProp, bestFitness];
+}
+const truthTableExample = truthTable({and: [{var: "a"}, {or: [{var: "b"}, {var: "b"}]}]}, ["a", "b"]);
+
+console.log(JSON.stringify(randomSearch(utils.rng, truthTableExample, 2, {vars: assign, maxHeight: 4, minHeight: 2})))

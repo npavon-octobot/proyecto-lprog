@@ -29,6 +29,7 @@ const variables = ["p", "q"];
 // -----------------------------------
 // -----------------------------------
 
+
 console.log(" ");
 console.log("-------- EVAL PROP TEST START -------------");
 console.log(`Creating Eval Prop of: ${JSON.stringify(assign)}`);
@@ -44,6 +45,7 @@ console.log(" ");
 // -----------------------------------
 // -----------------------------------
 
+
 console.log(" ");
 console.log("-------- TRUTH TABLE TEST START -------------");
 console.log(`Creating Truth Table for ${variables}`)
@@ -54,12 +56,12 @@ props.forEach(prop => {
 console.log("-------- TRUTH TABLE TEST FINISH -------------");
 console.log(" ");
 
-
 // -----------------------------------
 // -----------------------------------
 // randomProp TEST:
 // -----------------------------------
 // -----------------------------------
+
 
 console.log(" ");
 console.log("-------- RANDOM PROP TEST START -------------");
@@ -91,6 +93,7 @@ var countMax = 5;
 // -----------------------------------
 // -----------------------------------
 
+
 console.log(" ");
 console.log("-------- FITNESS TEST START -------------");
 props.forEach(prop => {
@@ -98,7 +101,7 @@ props.forEach(prop => {
 	console.log(truthTableExample);
 	console.log(phase1.fitness(prop, truthTableExample));
 });
-console.log("-------- FITNESS TEST START -------------");
+console.log("-------- FITNESS TEST FINISH -------------");
 console.log(" ");
 
 // -----------------------------------
@@ -107,11 +110,22 @@ console.log(" ");
 // -----------------------------------
 // -----------------------------------
 
+console.log(" ");
+console.log("-------- RANDOM SEARCH TEST START -------------");
 while(countMax > 0) {
 	console.log(`randomSearch with count= ${countMax}`);
 	console.log(JSON.stringify(phase1.randomSearch(utils.rng, truthTableExample2, countMax, propArgs)));
 	countMax -= 1;
 }
+console.log("-------- RANDOM SEARCH TEST FINISH -------------");
+console.log(" ");
+
+
+console.log(" ");
+console.log("-------- RANDOM TRUTH TABLE TEST START -------------");
+console.log(JSON.stringify(phase1.randomTruthTable(utils.rng, variables, propArgs)));
+console.log("-------- RANDOM TRUTH TABLE TEST FINISH -------------");
+console.log(" ");
 
 // -----------------------------------
 // -----------------------------------

@@ -23,7 +23,7 @@ exports.evalProp = function evalProp(prop, value) {
 exports.randomProp = function randomProp(rng, vars, maxHeight, minHeight) {
 	const props = ["var", "neg", "and", "or", "iff", "cond"];
 	const varRandomIndex = utils.turnToIntBetween(rng(), Object.keys(vars).length, 0);
-	const varChosen = vars[`${Object.keys(vars)[varRandomIndex]}`];
+	const varChosen = Object.keys(vars)[varRandomIndex];
 	const propChosen = props[utils.turnToIntBetween(rng(), props.length, 0)];
 	if (maxHeight < 1) {
 		return {"var": varChosen};

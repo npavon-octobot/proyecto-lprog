@@ -109,12 +109,13 @@ console.log(" ");
 // randomSearch TEST:
 // -----------------------------------
 // -----------------------------------
-
+const randomSearchResponse = phase1.randomSearch(utils.rng, truthTableExample2, countMax, propArgs);
 console.log(" ");
 console.log("-------- RANDOM SEARCH TEST START -------------");
 while(countMax > 0) {
 	console.log(`randomSearch with count= ${countMax}`);
-	console.log(JSON.stringify(phase1.randomSearch(utils.rng, truthTableExample2, countMax, propArgs)));
+	console.log(`This is the bestProp = ${JSON.stringify(randomSearchResponse[0])}`);
+	console.log(`With Fitness: ${randomSearchResponse[1]*100}% effectiveness`);
 	countMax -= 1;
 }
 console.log("-------- RANDOM SEARCH TEST FINISH -------------");
@@ -123,7 +124,10 @@ console.log(" ");
 
 console.log(" ");
 console.log("-------- RANDOM TRUTH TABLE TEST START -------------");
-console.log(JSON.stringify(phase1.randomTruthTable(utils.rng, variables, propArgs)));
+const randomTruthTableResponse = phase1.randomTruthTable(utils.rng, variables, propArgs);
+console.log(`For this Random Prop: ${JSON.stringify(randomTruthTableResponse[0])}`);
+console.log("You get this truth table:");
+console.log(randomTruthTableResponse[1]);
 console.log("-------- RANDOM TRUTH TABLE TEST FINISH -------------");
 console.log(" ");
 

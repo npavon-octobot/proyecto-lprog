@@ -145,25 +145,28 @@ console.log(" ");
 // -----------------------------------
 // -----------------------------------
 
-// console.log("initialPop test", phase2.initialPopulation(utils.rng, propArgs, 3));
+
+const initialPopulation = phase2.initialPopulation(utils.rng, propArgs, 10)
+console.log(" ");
+console.log("-------- INITIAL POPULATION TEST START -------------");
+console.log("This is the initialPopulation");
+console.log(JSON.stringify(initialPopulation));
+console.log("-------- INITIAL POPULATION TEST FINISH -------------");
+console.log(" ");
 
 
-const populationExample = [
-	{prop: {var: "p"}, fitness: 0},
-	{prop: {var: "q"}, fitness: 0},
-	{prop: {neg: {var: "p"}}, fitness: 0},
-	{prop: {neg: {var: "q"}}, fitness: 0},
-	{prop: {and: [{var: "p"}, {var: "q"}]}, fitness: 0},
-	{prop: {and: [{var: "p"}, {var: "p"}]}, fitness: 0},
-	{prop: {or: [{var: "p"}, {var: "q"}]}, fitness: 0},
-	{prop: {and: [{var: "q"}, {var: "q"}]}, fitness: 0},
-	{prop: {iff: [{var: "p"}, {var: "q"}]}, fitness: 0},
-	{prop: {iff: [{var: "q"}, {var: "q"}]}, fitness: 0},
-	{prop: {cond: [{var: "p"}, {var: "q"}]}, fitness: 0},
-	{prop: {cond: [{var: "p"}, {var: "p"}]}, fitness: 0}
-]
+const assessPopulation = phase2.assessPopulation(initialPopulation, truthTableExample2);
+console.log(" ");
+console.log("-------- ASSESS POPULATION TEST START -------------");
+console.log("This is the assess population from the initial population");
+console.log(assessPopulation);
+console.log("-------- ASSESS POPULATION TEST FINISH -------------");
+console.log(" ");
 
-console.log("asses test", phase2.assessPopulation(populationExample, truthTableExample2));
-
-
-console.log(phase2.selection(utils.rng, phase2.assessPopulation(populationExample, truthTableExample2)));
+const seleccionPopulation = phase2.selection(utils.rng, assessPopulation);
+console.log(" ");
+console.log("-------- SELECCION POPULATION TEST START -------------");
+console.log("This is one seleccion of Population:");
+console.log(seleccionPopulation);
+console.log("-------- SELECCION POPULATION TEST FINISH -------------");
+console.log(" ");

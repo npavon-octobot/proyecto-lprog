@@ -1,4 +1,4 @@
-const testSeed = 100;
+const testSeed = 499499492;
 
 function mulberry32(seed) {
   return function() {
@@ -15,6 +15,6 @@ exports.turnToIntBetween = function(number, max, min) {
   if (max == undefined || min == undefined || number == undefined){
     console.error("faltan parametros!");
   } else {
-    return Math.floor(number * (max - min) + min);
+    return Math.floor(number * (max - min +1) + min);
   }
 }

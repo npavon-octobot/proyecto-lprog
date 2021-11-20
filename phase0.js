@@ -144,3 +144,6 @@ function reduceToCombinations(arr) {
 
 	return arr;
 }
+
+
+exports.createVariableCombinations = (vars) => createVariableCombinations(vars);

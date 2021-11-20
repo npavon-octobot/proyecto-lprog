@@ -1,6 +1,7 @@
 var utils = require('./utils')
 var phase0 = require('./phase0')
 var phase1 = require('./phase1')
+var phase2 = require('./phase2')
 
 // -----------------------------------
 // -----------------------------------
@@ -124,10 +125,9 @@ console.log(" ");
 
 console.log(" ");
 console.log("-------- RANDOM TRUTH TABLE TEST START -------------");
-const randomTruthTableResponse = phase1.randomTruthTable(utils.rng, variables, propArgs);
-console.log(`For this Random Prop: ${JSON.stringify(randomTruthTableResponse[0])}`);
+const randomTruthTableResponse = phase1.randomTruthTable(utils.rng, variables);
 console.log("You get this truth table:");
-console.log(randomTruthTableResponse[1]);
+console.log(randomTruthTableResponse);
 console.log("-------- RANDOM TRUTH TABLE TEST FINISH -------------");
 console.log(" ");
 
@@ -137,3 +137,33 @@ console.log(" ");
 // -----------------------------------
 // -----------------------------------
 
+
+
+// -----------------------------------
+// -----------------------------------
+// PHASE 2 TESTS
+// -----------------------------------
+// -----------------------------------
+
+// console.log("initialPop test", phase2.initialPopulation(utils.rng, propArgs, 3));
+
+
+const populationExample = [
+	{prop: {var: "p"}, fitness: 0},
+	{prop: {var: "q"}, fitness: 0},
+	{prop: {neg: {var: "p"}}, fitness: 0},
+	{prop: {neg: {var: "q"}}, fitness: 0},
+	{prop: {and: [{var: "p"}, {var: "q"}]}, fitness: 0},
+	{prop: {and: [{var: "p"}, {var: "p"}]}, fitness: 0},
+	{prop: {or: [{var: "p"}, {var: "q"}]}, fitness: 0},
+	{prop: {and: [{var: "q"}, {var: "q"}]}, fitness: 0},
+	{prop: {iff: [{var: "p"}, {var: "q"}]}, fitness: 0},
+	{prop: {iff: [{var: "q"}, {var: "q"}]}, fitness: 0},
+	{prop: {cond: [{var: "p"}, {var: "q"}]}, fitness: 0},
+	{prop: {cond: [{var: "p"}, {var: "p"}]}, fitness: 0}
+]
+
+console.log("asses test", phase2.assessPopulation(populationExample, truthTableExample2));
+
+
+console.log(phase2.selection(utils.rng, phase2.assessPopulation(populationExample, truthTableExample2)));

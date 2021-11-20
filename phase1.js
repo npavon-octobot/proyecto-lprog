@@ -1,4 +1,5 @@
 var phase0 = require('./phase0')
+var utils = require('./utils')
 
 exports.fitness = function fitness(prop, truthTable){
 	let count = 0;
@@ -27,7 +28,12 @@ exports.randomSearch = function randomSearch(rng, truthTable, count, propArgs){
 	return [bestProp, bestFitness];
 }
 
-exports.randomTruthTable = function randomTruthTable(rng, vars, propArgs) {
-  let prop = phase0.randomProp(rng, propArgs.vars, propArgs.maxHeight, propArgs.minHeight);
-  return [prop, phase0.truthTable(prop, vars)];
+exports.randomTruthTable = function randomTruthTable(rng, vars) {
+	let varsCombinations = phase0.createVariableCombinations(vars);
+	let truthTable = [];
+	varsCombinations.forEach(vars => {
+		truthTable.push([vars, utils.turnToIntBetween(rng(), 1, 0)])
+	})
+
+  return truthTable;
 }

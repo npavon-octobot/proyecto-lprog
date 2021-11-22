@@ -1,4 +1,4 @@
-const testSeed = 499499492;
+const testSeed = 123;
 
 function mulberry32(seed) {
   return function() {

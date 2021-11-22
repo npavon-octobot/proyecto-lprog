@@ -1,3 +1,4 @@
+var utils = require('./utils')
 var phase0 = require('./phase0')
 var phase1 = require('./phase1')
 
@@ -46,11 +47,13 @@ exports.selection = function selection(rng, population){
 exports.mutation = function mutation(rng, prop, propArgs){
     let nodeCount = countNodes(prop);
     let chosenNode = utils.turnToIntBetween(rng(), nodeCount, 0);
-    let mutatedProp = replaceNode(prop, chosenNode, propArgs);
+    console.log("change ", chosenNode);
+    let mutatedProp = replaceNode(prop, chosenNode, propArgs, 1);
     return mutatedProp;
 }
 
 function countNodes(prop){
+    console.log(prop);
     if(prop.var){
         return 1;
     }
@@ -58,11 +61,21 @@ function countNodes(prop){
     return (countNodes(prop[key][0]) + countNodes(prop[key][1]) + 1);
 }
 
-function replaceNode(prop, chosenNode, propArgs, currentHeight = 0){
-    if (chosenNode == 0){
-        return phase0.randomProp(rng, propArgs.vars, propArgs.maxHeight - currentHeight, 0);
+var contador = 0;
+function replaceNode(prop, chosenNode, propArgs, currentHeight){ 
+    if (chosenNode == contador){
+        console.log("Entro con prop ", prop, " Altura ", currentHeight, " llama a randomprop con marguen de ", propArgs.maxHeight - currentHeight);
+        let newProp = phase0.randomProp(utils.rng, propArgs.vars, propArgs.maxHeight - currentHeight, 0);
+        console.log("NexProp ", newProp);
+        return newProp;
     }
-
-    
-    return replaceNode(prop, chosenNode-1, propArgs, currentHeight)
+    contador ++;
+    if(prop.var) {
+        return currentHeight;
+    } else {
+        key = Object.keys(prop);
+        let lHeight = !(prop[key][0]) ? currentHeight : replaceNode(prop[key][0],chosenNode,propArgs,currentHeight + 1);
+        let rHeight = !(prop[key][1]) ? currentHeight : replaceNode(prop[key][1],chosenNode,propArgs,currentHeight + 1);
+    }
+    return  prop;
 }

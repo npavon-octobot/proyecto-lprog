@@ -173,8 +173,15 @@ console.log(" ");
 
 //Falta que devuelva bien el objeto para atras, ya elige de forma al azar
 //donde cambiar y manda a generar una nueva prop controlando las alturas
+console.log(" ");
 console.log("-------- SELECCION MUTATION TEST START -------------");
 const propArgs2 = {vars: assign, maxHeight: 4, minHeight: 1};
-console.log(phase2.mutation(utils.rng,{and: [{var: "p"}, {iff: [{iff: [{var: "p"}, {var: "q"}]},{var: "q"}]}]},propArgs2 ));
+const propExample = {and: [{var: "p"}, {iff: [{iff: [{var: "p"}, {var: "q"}]},{var: "q"}]}]};
+console.log(`From prop ${JSON.stringify(propExample)}`);
+console.log("To mutated:")
+console.log(JSON.stringify(phase2.mutation(utils.rng, propExample, propArgs2 )));
 console.log("-------- SELECCION MUTATION TEST FINISH -------------");
 console.log(" ");
+
+
+phase2.evolutionStrategy(utils.rng, truthTableExample, 2, 10, propArgs);

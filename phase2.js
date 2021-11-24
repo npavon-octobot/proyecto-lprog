@@ -44,26 +44,34 @@ exports.selection = function selection(rng, population){
     return selectedPopulation;
 }
 
+var contador = 0;
 exports.mutation = function mutation(rng, prop, propArgs){
     let nodeCount = countNodes(prop);
     let chosenNode = utils.turnToIntBetween(rng(), nodeCount, 0);
     let mutatedProp = replaceNode(prop, chosenNode, propArgs, 1);
+    contador = 0;
     return mutatedProp;
 }
 
 function countNodes(prop){
-    if(prop.var){
-        return 1;
-    }
     key = Object.keys(prop);
-    return (countNodes(prop[key][0]) + countNodes(prop[key][1]) + 1);
+    if (key == "var") {
+        return 1;
+    } else if (key == "neg") {
+        return countNodes(prop[key]) + 1;
+    } else if (key == "and" || key == "or" || key == "iff" || key == "cond") {
+        let prop0 = prop[key][0];
+        let prop1 = prop[key][1];
+        return (countNodes(prop0) + countNodes(prop1) + 1);
+    } else {
+        return 0;
+    }
 }
 
-var contador = 0;
 function replaceNode(prop, chosenNode, propArgs, currentHeight){
     const key = Object.keys(prop);
-    let leftChild;
-    let rightChild;
+    const propKey = {};
+    let leftChild, rightChild, onlyChild, prop0, prop1;
     if (chosenNode == contador){
         let newProp = phase0.randomProp(utils.rng, propArgs.vars, propArgs.maxHeight - currentHeight, 0);
         return newProp;
@@ -71,12 +79,29 @@ function replaceNode(prop, chosenNode, propArgs, currentHeight){
     contador ++;
     if(prop.var) {
         return prop;
-    } else {
-        leftChild = !(prop[key][0]) ? currentHeight : replaceNode(prop[key][0],chosenNode,propArgs,currentHeight + 1);
-        rightChild = !(prop[key][1]) ? currentHeight : replaceNode(prop[key][1],chosenNode,propArgs,currentHeight + 1);
+    } else if (key == "neg") {
+        if (prop.prop) {
+            prop0 = prop.prop[key];
+        } else {
+            prop0 = prop[key];
+        }
+        onlyChild = replaceNode(prop0, chosenNode, propArgs, currentHeight + 1);
+    } else if (key == "and" || key == "or" || key == "iff" || key == "cond") {
+        if (prop.prop) {
+            prop0 = prop.prop[key][0];
+            prop1 = prop.prop[key][1];
+        } else {
+            prop0 = prop[key][0];
+            prop1 = prop[key][1];
+        }
+        leftChild = replaceNode(prop0, chosenNode, propArgs, currentHeight + 1);
+        rightChild = replaceNode(prop1,chosenNode,propArgs,currentHeight + 1);
     }
-    const propKey = {};
-    propKey[key] = [leftChild, rightChild];
+    if (onlyChild) {
+        propKey[key] = onlyChild;
+    } else {
+        propKey[key] = [leftChild, rightChild];
+    }
     return propKey;
 }
 
@@ -87,17 +112,17 @@ exports.evolutionStrategy = function evolutionStrategy(rng, truthTable, steps, c
     let best = Math.max(...population.map((individual) => {
         return individual.fitness
     }));
-    //while (best < 1 && step < steps) {
-    //step += 1;
-    selectedProp = exports.selection(rng, population);
-    console.log(population);
-    population = population.forEach((individual) => {
-        console.log(individual);
-        console.log('hola');
-        if (individual.prop == selectedProp) {
-            return {prop: exports.mutation(rng, selectedProp, propArgs), fitness: NaN}
-        }
-    });
-    console.log(population);
-    //}
+    while (best < 1 && step < steps) {
+        step += 1;
+        selectedProp = exports.selection(rng, population);
+        population = population.map((individual) => {
+            return {prop: exports.mutation(rng, individual.prop, propArgs), fitness: NaN};
+        });
+        population = exports.assessPopulation(population, truthTable);
+        best = Math.max(...population.map((individual) => {
+            return individual.fitness
+        }));
+    }
+
+    return population;
 }

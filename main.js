@@ -171,8 +171,7 @@ console.log(seleccionPopulation);
 console.log("-------- SELECCION POPULATION TEST FINISH -------------");
 console.log(" ");
 
-//Falta que devuelva bien el objeto para atras, ya elige de forma al azar
-//donde cambiar y manda a generar una nueva prop controlando las alturas
+
 console.log(" ");
 console.log("-------- SELECCION MUTATION TEST START -------------");
 const propArgs2 = {vars: assign, maxHeight: 4, minHeight: 1};
@@ -184,4 +183,11 @@ console.log("-------- SELECCION MUTATION TEST FINISH -------------");
 console.log(" ");
 
 
-phase2.evolutionStrategy(utils.rng, truthTableExample, 2, 10, propArgs);
+console.log(" ");
+console.log("-------- EVOLUTION STRATEGY TEST START -------------");
+console.log("This is the evolution strategy for this truthTable: ")
+console.log(truthTableExample);
+console.log("The result is:")
+console.log(phase2.evolutionStrategy(utils.rng, truthTableExample, 2, 10, propArgs));
+console.log("-------- EVOLUTION STRATEGY TEST FINISH -------------");
+console.log(" ");

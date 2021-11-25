@@ -182,12 +182,19 @@ console.log(JSON.stringify(phase2.mutation(utils.rng, propExample, propArgs2 )))
 console.log("-------- SELECCION MUTATION TEST FINISH -------------");
 console.log(" ");
 
+const truthTableExample3 = phase0.truthTable({cond: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
 
 console.log(" ");
 console.log("-------- EVOLUTION STRATEGY TEST START -------------");
 console.log("This is the evolution strategy for this truthTable: ")
 console.log(truthTableExample);
 console.log("The result is:")
-console.log(phase2.evolutionStrategy(utils.rng, truthTableExample, 2, 10, propArgs));
+console.log(phase2.evolutionStrategy(utils.rng, truthTableExample3, 6, 5, propArgs));
 console.log("-------- EVOLUTION STRATEGY TEST FINISH -------------");
 console.log(" ");
+
+// -----------------------------------
+// -----------------------------------
+// PHASE 2 TESTS FINISH
+// -----------------------------------
+// -----------------------------------

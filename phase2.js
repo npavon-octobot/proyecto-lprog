@@ -113,8 +113,10 @@ exports.evolutionStrategy = function evolutionStrategy(rng, truthTable, steps, c
         return individual.fitness
     }));
     while (best < 1 && step < steps) {
+        console.log(`Population on step: ${step}:`);
+        console.log(population);
         step += 1;
-        selectedProp = exports.selection(rng, population);
+        population = exports.selection(rng, population);
         population = population.map((individual) => {
             return {prop: exports.mutation(rng, individual.prop, propArgs), fitness: NaN};
         });
@@ -123,6 +125,6 @@ exports.evolutionStrategy = function evolutionStrategy(rng, truthTable, steps, c
             return individual.fitness
         }));
     }
-
+    console.log("Steps made: ", step);
     return population;
 }

@@ -68,6 +68,10 @@ console.log(" ");
 console.log("-------- RANDOM PROP TEST START -------------");
 console.log("Seed inicial:", 2);
 console.log(JSON.stringify(phase0.randomProp(utils.rng, assign, 3, 1)));
+//console.log("Seed inicial:", 3);
+//console.log(JSON.stringify(phase0.randomProp(utils.rng, assign, 4, 2)));
+//console.log("Seed inicial:", 4);
+//console.log(JSON.stringify(phase0.randomProp(utils.rng, assign, 10, 5)));
 console.log("-------- RANDOM PROP TEST FINISH -------------");
 console.log(" ");
 
@@ -160,6 +164,8 @@ console.log(" ");
 console.log("-------- ASSESS POPULATION TEST START -------------");
 console.log("This is the assess population from the initial population");
 console.log(assessPopulation);
+console.log(" ")
+console.log(JSON.stringify(assessPopulation));
 console.log("-------- ASSESS POPULATION TEST FINISH -------------");
 console.log(" ");
 
@@ -168,6 +174,8 @@ console.log(" ");
 console.log("-------- SELECCION POPULATION TEST START -------------");
 console.log("This is one seleccion of Population:");
 console.log(seleccionPopulation);
+console.log(" ");
+console.log(JSON.stringify(seleccionPopulation));
 console.log("-------- SELECCION POPULATION TEST FINISH -------------");
 console.log(" ");
 
@@ -176,6 +184,8 @@ console.log(" ");
 console.log("-------- SELECCION MUTATION TEST START -------------");
 const propArgs2 = {vars: assign, maxHeight: 4, minHeight: 1};
 const propExample = {and: [{var: "p"}, {iff: [{iff: [{var: "p"}, {var: "q"}]},{var: "q"}]}]};
+const propExample2 = {or: [{var: "p"}, {var: "q"}]};
+const propExample3 = {neg:{and:[{var:"q"},{var:"p"}]}};
 console.log(`From prop ${JSON.stringify(propExample)}`);
 console.log("To mutated:")
 console.log(JSON.stringify(phase2.mutation(utils.rng, propExample, propArgs2 )));

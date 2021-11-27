@@ -17,10 +17,13 @@ exports.randomSearch = function randomSearch(rng, truthTable, count, propArgs){
 	let bestProp = null;
 	let bestFitness = Number.MIN_SAFE_INTEGER;
 	while(bestFitness < 1 && step < count){
+		console.log("Step: ", step);
 		step++;
 		let prop = phase0.randomProp(rng, propArgs.vars, propArgs.maxHeight, propArgs.minHeight);
+		console.log("Random Prop to use for fitness check: ", prop);
 		let currentFitness = exports.fitness(prop, truthTable);
-		if(currentFitness>bestFitness){
+		console.log("Fitness:", currentFitness);
+		if(currentFitness > bestFitness){
 			bestProp = prop;
 			bestFitness = currentFitness;
 		}

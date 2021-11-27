@@ -20,7 +20,7 @@ exports.randomSearch = function randomSearch(rng, truthTable, count, propArgs){
 		console.log("Step: ", step);
 		step++;
 		let prop = phase0.randomProp(rng, propArgs.vars, propArgs.maxHeight, propArgs.minHeight);
-		console.log("Random Prop to use for fitness check: ", prop);
+		console.log("Random Prop to use for fitness check: ", utils.simplifyProposition(prop));
 		let currentFitness = exports.fitness(prop, truthTable);
 		console.log("Fitness:", currentFitness);
 		if(currentFitness > bestFitness){

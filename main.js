@@ -36,9 +36,9 @@ console.log(" ");
 console.log("-------- EVAL PROP TEST START -------------");
 console.log(`Creating Eval Prop of: ${JSON.stringify(assign)}`);
 props.forEach(prop => {
-	console.log(`${JSON.stringify(prop)}: ${phase0.evalProp(prop, assign)}`);
+	console.log(`${utils.simplifyProposition(prop)}: ${phase0.evalProp(prop, assign)}`);
 });
-console.log(`Creating Eval Prop for: ${JSON.stringify(propComplejo)}`);
+console.log(`Creating Eval Prop for: ${utils.simplifyProposition(propComplejo)}`);
 console.log("Testing if result is correct:")
 console.log(phase0.evalProp(propComplejo, assign) == true ? "PASS" : "FAIL");
 console.log("-------- EVAL PROP TEST FINISH -------------");
@@ -55,10 +55,10 @@ console.log(" ");
 console.log("-------- TRUTH TABLE TEST START -------------");
 console.log(`Creating Truth Table for ${variables}`)
 props.forEach(prop => {
-	console.log(`Truth table for: ${JSON.stringify(prop)}`)
+	console.log(`Truth table for: ${utils.simplifyProposition(prop)}`)
 	console.log(phase0.truthTable(prop, variables));
 });
-console.log("Testing more complex prop, truth table for: ", JSON.stringify(propComplejo));
+console.log("Testing more complex prop, truth table for: ", utils.simplifyProposition(propComplejo));
 console.log(phase0.truthTable(propComplejo, variables));
 const truthTableResult = [true, true, false, false];
 console.log(phase0.truthTable(propComplejo, variables).map((element, index) => element[1] == truthTableResult[index]));
@@ -77,11 +77,11 @@ console.log(" ");
 console.log(" ");
 console.log("-------- RANDOM PROP TEST START -------------");
 console.log("Seed inicial:", 2);
-console.log(JSON.stringify(phase0.randomProp(utils.rng, assign, 3, 1)));
+console.log(utils.simplifyProposition(phase0.randomProp(utils.rng, assign, 3, 1)));
 //console.log("Seed inicial:", 3);
-//console.log(JSON.stringify(phase0.randomProp(utils.rng, assign, 4, 2)));
+//console.log(utils.simplifyProposition(phase0.randomProp(utils.rng, assign, 4, 2)));
 //console.log("Seed inicial:", 4);
-//console.log(JSON.stringify(phase0.randomProp(utils.rng, assign, 10, 5)));
+//console.log(utils.simplifyProposition(phase0.randomProp(utils.rng, assign, 10, 5)));
 console.log("-------- RANDOM PROP TEST FINISH -------------");
 console.log(" ");
 
@@ -112,7 +112,7 @@ var countMax = 5;
 console.log(" ");
 console.log("-------- FITNESS TEST START -------------");
 props.forEach(prop => {
-	console.log(`Fitness For: ${JSON.stringify(prop)}`)
+	console.log(`Fitness For: ${utils.simplifyProposition(prop)}`)
 	console.log(truthTableExample);
 	console.log(phase1.fitness(prop, truthTableExample));
 });
@@ -165,7 +165,7 @@ const initialPopulation = phase2.initialPopulation(utils.rng, propArgs, 10)
 console.log(" ");
 console.log("-------- INITIAL POPULATION TEST START -------------");
 console.log("This is the initialPopulation");
-console.log(JSON.stringify(initialPopulation));
+console.log(utils.simplifyPopulation(initialPopulation));
 console.log("-------- INITIAL POPULATION TEST FINISH -------------");
 console.log(" ");
 
@@ -174,9 +174,7 @@ const assessPopulation = phase2.assessPopulation(initialPopulation, truthTableEx
 console.log(" ");
 console.log("-------- ASSESS POPULATION TEST START -------------");
 console.log("This is the assess population from the initial population");
-console.log(assessPopulation);
-console.log(" ")
-console.log(JSON.stringify(assessPopulation));
+console.log(utils.simplifyPopulation(assessPopulation));
 console.log("-------- ASSESS POPULATION TEST FINISH -------------");
 console.log(" ");
 
@@ -184,9 +182,7 @@ const seleccionPopulation = phase2.selection(utils.rng, assessPopulation);
 console.log(" ");
 console.log("-------- SELECCION POPULATION TEST START -------------");
 console.log("This is one seleccion of Population:");
-console.log(seleccionPopulation);
-console.log(" ");
-console.log(JSON.stringify(seleccionPopulation));
+console.log(utils.simplifyPopulation(seleccionPopulation));
 console.log("-------- SELECCION POPULATION TEST FINISH -------------");
 console.log(" ");
 
@@ -197,9 +193,9 @@ const propArgs2 = {vars: assign, maxHeight: 4, minHeight: 1};
 const propExample = {and: [{var: "p"}, {iff: [{iff: [{var: "p"}, {var: "q"}]},{var: "q"}]}]};
 const propExample2 = {or: [{var: "p"}, {var: "q"}]};
 const propExample3 = {neg:{and:[{var:"q"},{var:"p"}]}};
-console.log(`From prop ${JSON.stringify(propExample)}`);
+console.log(`From prop ${utils.simplifyProposition(propExample)}`);
 console.log("To mutated:")
-console.log(JSON.stringify(phase2.mutation(utils.rng, propExample, propArgs2 )));
+console.log(utils.simplifyProposition(phase2.mutation(utils.rng, propExample, propArgs2 )));
 console.log("-------- SELECCION MUTATION TEST FINISH -------------");
 console.log(" ");
 
@@ -210,7 +206,7 @@ console.log("-------- EVOLUTION STRATEGY TEST START -------------");
 console.log("This is the evolution strategy for this truthTable: ")
 console.log(truthTableExample3);
 console.log("The result is:")
-console.log(phase2.evolutionStrategy(utils.rng, truthTableExample3, 6, 5, propArgs));
+console.log(utils.simplifyPopulation(phase2.evolutionStrategy(utils.rng, truthTableExample3, 6, 5, propArgs)));
 console.log("-------- EVOLUTION STRATEGY TEST FINISH -------------");
 console.log(" ");
 
@@ -226,7 +222,7 @@ let truthTableExample6 = phase0.truthTable({and: [{var: "p"}, {or: [{var: "q"}, 
 let truthTableExample7 = phase0.truthTable({or: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
 //console.log(truthTableExample4);
 console.log("STEPS MADE TESTING....");
-//console.log(JSON.stringify(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgs)));
+//console.log(utils.simplifyProposition(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgs)));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample5, 6, 5, propArgs));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample6, 6, 5, propArgs));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample7, 6, 5, propArgs));
@@ -241,7 +237,7 @@ console.log(truthTableExample4);
 console.log(truthTableExample5);
 console.log(truthTableExample6);
 console.log(truthTableExample7);
-//console.log(JSON.stringify(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgsOneVar)));
+//console.log(utils.simplifyProposition(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgsOneVar)));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample5, 6, 5, propArgsOneVar));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample6, 6, 5, propArgsOneVar));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample7, 6, 5, propArgsOneVar));

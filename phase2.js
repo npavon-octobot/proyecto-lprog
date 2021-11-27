@@ -114,7 +114,7 @@ exports.evolutionStrategy = function evolutionStrategy(rng, truthTable, steps, c
     }));
     while (best < 1 && step < steps) {
         console.log(`Population on step: ${step}:`);
-        console.log(population);
+        console.log(utils.simplifyPopulation(population));
         step += 1;
         population = exports.selection(rng, population);
         population = population.map((individual) => {

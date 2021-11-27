@@ -61,7 +61,7 @@ props.forEach(prop => {
 console.log("Testing more complex prop, truth table for: ", utils.simplifyProposition(propComplejo));
 console.log(phase0.truthTable(propComplejo, variables));
 const truthTableResult = [true, true, false, false];
-console.log(phase0.truthTable(propComplejo, variables).map((element, index) => element[1] == truthTableResult[index]));
+console.log("Truth table with propComplejo test:");
 console.log(phase0.truthTable(propComplejo, variables).map((element, index) => element[1] == truthTableResult[index]) ? "PASSED" : "FAIL");
 
 console.log("-------- TRUTH TABLE TEST FINISH -------------");
@@ -125,15 +125,44 @@ console.log(" ");
 // -----------------------------------
 // -----------------------------------
 
+
 console.log(" ");
 console.log("-------- RANDOM SEARCH TEST START -------------");
-while(countMax > 0) {
-	console.log("------------------ START OF COUNT ", countMax, " -------------------------");
-	const randomSearchResponse = phase1.randomSearch(utils.rng, truthTableExample, countMax, propArgs);
-	console.log(`With Fitness: ${randomSearchResponse[1]*100}% effectiveness`);
-	console.log("------------------ END OF COUNT ", countMax, " ------------------------");
-	countMax -= 1;
-}
+console.log("Truth Table");
+
+let truthTableExample4 = phase0.truthTable({cond: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}, ["p"]);
+let truthTableExample5 = phase0.truthTable({neg: {iff: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}}, ["p"]);
+let truthTableExample6 = phase0.truthTable({and: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}, ["p"]);
+let truthTableExample7 = phase0.truthTable({or: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}, ["p"])
+
+console.log("------------------ START OF COUNT ", countMax, " -------------------------");
+console.log("Truth Table")
+console.log(JSON.stringify(truthTableExample4));
+const randomSearchResponse1 = phase1.randomSearch(utils.rng, truthTableExample, countMax, propArgs);
+console.log(`With Fitness: ${randomSearchResponse1[1]*100}% effectiveness`);
+console.log("------------------ END OF COUNT ", countMax, " ------------------------");
+
+console.log("------------------ START OF COUNT ", countMax, " -------------------------");
+console.log("Truth Table")
+console.log(JSON.stringify(truthTableExample5));
+const randomSearchResponse2 = phase1.randomSearch(utils.rng, truthTableExample, countMax, propArgs);
+console.log(`With Fitness: ${randomSearchResponse2[1]*100}% effectiveness`);
+console.log("------------------ END OF COUNT ", countMax, " ------------------------");
+
+console.log("------------------ START OF COUNT ", countMax, " -------------------------");
+console.log("Truth Table")
+console.log(JSON.stringify(truthTableExample6));
+const randomSearchResponse3 = phase1.randomSearch(utils.rng, truthTableExample, countMax, propArgs);
+console.log(`With Fitness: ${randomSearchResponse3[1]*100}% effectiveness`);
+console.log("------------------ END OF COUNT ", countMax, " ------------------------");
+
+console.log("------------------ START OF COUNT ", countMax, " -------------------------");
+console.log("Truth Table")
+console.log(JSON.stringify(truthTableExample7));
+const randomSearchResponse4 = phase1.randomSearch(utils.rng, truthTableExample, countMax, propArgs);
+console.log(`With Fitness: ${randomSearchResponse4[1]*100}% effectiveness`);
+console.log("------------------ END OF COUNT ", countMax, " ------------------------");
+
 console.log("-------- RANDOM SEARCH TEST FINISH -------------");
 console.log(" ");
 
@@ -216,10 +245,11 @@ console.log(" ");
 // -----------------------------------
 // -----------------------------------
 
-let truthTableExample4 = phase0.truthTable({cond: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
-let truthTableExample5 = phase0.truthTable({neg: {iff: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}}, ["p", "q"]);
-let truthTableExample6 = phase0.truthTable({and: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
-let truthTableExample7 = phase0.truthTable({or: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
+//let truthTableExample4 = phase0.truthTable({cond: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
+//let truthTableExample5 = phase0.truthTable({neg: {iff: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}}, ["p", "q"]);
+//let truthTableExample6 = phase0.truthTable({and: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
+//let truthTableExample7 = phase0.truthTable({or: [{var: "p"}, {or: [{var: "q"}, {var: "q"}]}]}, ["p", "q"]);
+
 //console.log(truthTableExample4);
 console.log("STEPS MADE TESTING....");
 //console.log(utils.simplifyProposition(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgs)));
@@ -238,6 +268,13 @@ console.log(truthTableExample5);
 console.log(truthTableExample6);
 console.log(truthTableExample7);
 //console.log(utils.simplifyProposition(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgsOneVar)));
+//let oneVar = {"p": true}
+//let propArgsOneVar = {vars: oneVar, maxHeight: 2, minHeight: 1};
+//truthTableExample4 = phase0.truthTable({cond: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}, ["p"]);
+//truthTableExample5 = phase0.truthTable({neg: {iff: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}}, ["p"]);
+//truthTableExample6 = phase0.truthTable({and: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}, ["p"]);
+//truthTableExample7 = phase0.truthTable({or: [{var: "p"}, {or: [{var: "p"}, {var: "p"}]}]}, ["p"]);
+//console.log(JSON.stringify(phase2.evolutionStrategy(utils.rng, truthTableExample4, 6, 5, propArgsOneVar)));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample5, 6, 5, propArgsOneVar));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample6, 6, 5, propArgsOneVar));
 //console.log(phase2.evolutionStrategy(utils.rng, truthTableExample7, 6, 5, propArgsOneVar));
